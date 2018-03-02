@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FIASCOv2.iml" filepath="$PROJECT_DIR$/FIASCOv2.iml" />
+      <module fileurl="file://C:\Users\kjcosca\Documents\fiasco\FIASCOv2.iml" filepath="C:\Users\kjcosca\Documents\fiasco\FIASCOv2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\kjcosca\Documents\fiasco\app\app.iml" filepath="C:\Users\kjcosca\Documents\fiasco\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fiasco.iml" filepath="$PROJECT_DIR$/fiasco.iml" />
     </modules>
   </component>
 </project>

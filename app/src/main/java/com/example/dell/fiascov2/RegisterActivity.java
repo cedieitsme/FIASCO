@@ -2,6 +2,7 @@ package com.example.dell.fiascov2;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,21 @@ public class RegisterActivity extends AppCompatActivity implements SuperTask.Tas
 
     private EditText etBirthday;
     private Button btnRegister;
+    private EditText et_fname;
+    private EditText et_lname;
+    private EditText et_contact;
+    private EditText et_city;
+    private EditText et_street;
+    private EditText et_postal;
+    private EditText et_height;
+    private EditText et_weight;
+    private EditText et_email;
+    private EditText et_password;
+    private EditText et_confirm_password;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
+    private String birthdate;
 
     private static final String TAG = "RegisterActivity";
 
@@ -34,7 +48,19 @@ public class RegisterActivity extends AppCompatActivity implements SuperTask.Tas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etBirthday = (EditText) findViewById(R.id.register_et_birthday);
+        etBirthday = findViewById(R.id.register_et_birthday);
+        et_fname = findViewById(R.id.register_et_fname);
+        et_email = findViewById(R.id.register_et_email);
+        et_lname = findViewById(R.id.register_et_lname);
+        et_contact = findViewById(R.id.register_et_contact);
+        et_city = findViewById(R.id.register_et_city);
+        et_street = findViewById(R.id.register_et_street);
+        et_postal = findViewById(R.id.register_et_postal);
+        et_height = findViewById(R.id.register_et_height);
+        et_weight = findViewById(R.id.register_et_weight);
+        et_password = findViewById(R.id.register_et_password);
+        et_confirm_password = findViewById(R.id.register_et_confpassword);
+
         btnRegister = findViewById(R.id.register_btn_register);
         etBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,26 +84,29 @@ public class RegisterActivity extends AppCompatActivity implements SuperTask.Tas
 
                 String date = month + "/" + day + "/" + year;
                 etBirthday.setText(date);
+                birthdate = year + "-" + month + "-" + day;
             }
         };
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SuperTask.execute(RegisterActivity.this, "register", TaskConfig.REGISTER_URL);
+                SuperTask.execute(RegisterActivity.this, "register", TaskConfig.REGISTER_URL, "Registering User...");
             }
         });
     }
 
     @Override
     public void onTaskRespond(String id, String json) {
-        Toast.makeText(this, ""+json, Toast.LENGTH_SHORT).show();
         switch (id) {
             case "register": {
-                Log.d(TAG, TaskConfig.REGISTER_URL);
-                Log.d(TAG, json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
+                    if(jsonObject.getString("status").equals("success")) {
+                        Intent intent  = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } catch (Exception e) { }
                 break;
             }
@@ -88,19 +117,19 @@ public class RegisterActivity extends AppCompatActivity implements SuperTask.Tas
     public ContentValues setRequestValues(String id, ContentValues contentValues) {
         switch (id) {
             case "register":
-                contentValues.put("fname", "Kendrick Andrew");
-                contentValues.put("lname", "Cosca");
+                contentValues.put("fname", et_fname.getText().toString());
+                contentValues.put("lname", et_lname.getText().toString());
                 contentValues.put("gender", "Male");
-                contentValues.put("birthdate", "1999-02-03");
-                contentValues.put("mobile_number", "09167983610");
-                contentValues.put("city", "Quezon City");
-                contentValues.put("street", "Gold Street");
-                contentValues.put("postal_code", "1116");
-                contentValues.put("weight", "80");
-                contentValues.put("email",
-                        "kendrickjaviercosca@gmail.com");
-                contentValues.put("password", "123456");
-                break;
+                contentValues.put("birthdate", birthdate);
+                contentValues.put("mobile_number", et_contact.getText().toString());
+                contentValues.put("city", et_city.getText().toString());
+                contentValues.put("street", et_street.getText().toString());
+                contentValues.put("postal_code", et_postal.getText().toString());
+                contentValues.put("weight", et_weight.getText().toString());
+                contentValues.put("height", et_height.getText().toString());
+                contentValues.put("email", et_email.getText().toString());
+                contentValues.put("password", et_password.getText().toString());
+                return contentValues;
         }
         return null;
     }

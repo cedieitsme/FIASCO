@@ -6,9 +6,10 @@ package com.example.dell.fiascov2.config;
 
 public final class TaskConfig {
 
-    public static final String HTTP_HOST = "http://192.168.42.118/";
+    public static final String HTTP_HOST = "http://goldsgymfias.com/";
     public static final String DIR_URL = "";
-    public static final String DIR_FIASCO_URL = DIR_URL + "fiascov2/public/";
+    public static final String DIR_FIASCO_URL = DIR_URL + "mobile/";
     public static final String LOGIN_URL = HTTP_HOST + DIR_FIASCO_URL + "login";
     public static final String REGISTER_URL = HTTP_HOST + DIR_FIASCO_URL + "register";
+    public static final String GET_USER = HTTP_HOST + DIR_FIASCO_URL + "get_data";
 }

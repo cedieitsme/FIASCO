@@ -9,14 +9,16 @@
     tools:context="com.example.dell.fiascov2.UserActivity">
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorNavigationDrawer"
-        app:itemTextColor="@color/colorNavigationDrawer"
-        app:itemIconTint="@color/colorNavigationDrawer"
-        app:menu="@menu/my_menu"
-        app:headerLayout="@layout/activity_header">
+        android:fitsSystemWindows="true"
+        app:itemTextColor="@color/colorNavigationDrawerText"
+        app:itemIconTint="@color/colorNavigationDrawerItem"
+        app:headerLayout="@layout/activity_header"
+        app:menu="@menu/my_menu">
 
     </android.support.design.widget.NavigationView>
 

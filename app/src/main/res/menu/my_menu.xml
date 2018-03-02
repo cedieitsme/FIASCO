@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
-    <item
+<item
         android:id="@+id/plans"
         android:title="@string/hint_nav_plans"
         android:icon="@drawable/ic_plans"/>

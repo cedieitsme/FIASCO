@@ -1,5 +1,6 @@
 package com.example.dell.fiascov2.utils;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -27,9 +28,10 @@ import java.util.Set;
 
 public final class SuperTask extends AsyncTask<Void, Void, String> {
 
-    private final Context context;
-    private final String url;
-    private final String id;
+    private Context context;
+    private String url;
+    private String id;
+    private ProgressDialog progressDialog;
 
     private SuperTask(Context context, String id, String url) {
         this.context = context;
@@ -37,8 +39,23 @@ public final class SuperTask extends AsyncTask<Void, Void, String> {
         this.id = id;
     }
 
+    private SuperTask(Context context, String id, String url, String message) {
+        this.context = context;
+        this.url = url;
+        this.id = id;
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(message);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
     public static void execute(Context context, String id, String url) {
         new SuperTask(context, id, url).execute();
+    }
+    public static void execute(Context context, String id, String url, String message) {
+        new SuperTask(context, id, url, message).execute();
     }
 
     public interface TaskListener {
@@ -105,5 +122,7 @@ public final class SuperTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String json) {
         super.onPostExecute(json);
         ((TaskListener) this.context).onTaskRespond(this.id, json);
+        if(progressDialog != null)
+            progressDialog.dismiss();
     }
 }

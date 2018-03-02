@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public final class LoginActivity extends AppCompatActivity implements SuperTask.
     private static final String LOGIN_ID = "login_id";
     private boolean errorEmptyEmail, errorEmptyPassword, errorInvalidLogin, errorVerificationRequired;
 
-    private EditText etEmail, etPassword;
+    private TextInputEditText etEmail, etPassword;
     private TextInputLayout tilEmail, tilPassword;
     private Button btnLogin;
     private TextView tvRegister;
@@ -43,11 +44,12 @@ public final class LoginActivity extends AppCompatActivity implements SuperTask.
 
         rootView = findViewById(R.id.login_root_view);
 
-        etEmail = (EditText) findViewById(R.id.login_et_email);
-        etPassword = (EditText) findViewById(R.id.login_et_password);
+        etEmail = findViewById(R.id.login_et_email);
+        etPassword = findViewById(R.id.login_et_password);
         etPassword.setTypeface(Typeface.DEFAULT);
         etPassword.setTransformationMethod(new PasswordTransformationMethod());
-
+        etEmail.setText("witwiw0034@gmail.com");
+        etPassword.setText("kencosca");
         tilEmail = (TextInputLayout) findViewById(R.id.login_email_container);
         tilPassword = (TextInputLayout) findViewById(R.id.login_password_container);
 
@@ -69,7 +71,7 @@ public final class LoginActivity extends AppCompatActivity implements SuperTask.
                 }
 
                 Log.d(TAG, "btnLogin got clicked!");
-                SuperTask.execute(LoginActivity.this, "login", TaskConfig.LOGIN_URL);
+                SuperTask.execute(LoginActivity.this, "login", TaskConfig.LOGIN_URL, "Logging in...");
             }
         });
 
@@ -145,9 +147,11 @@ public final class LoginActivity extends AppCompatActivity implements SuperTask.
             case "login": {
                 try {
                     Toast.makeText(this, json + "", Toast.LENGTH_SHORT).show();
-
+                    int id = 0;
                     JSONObject jsonObject = new JSONObject(json);
-                    int id = jsonObject.getInt("login");
+                    if(jsonObject.getString("status").equals("success")) {
+                        id = jsonObject.getInt("user_id");
+                    }
 
                     errorInvalidLogin = id == 0;
                     errorVerificationRequired = id == -1;
